@@ -38,8 +38,11 @@ async function fetchTranscript(videoUrl) {
 
     return normalizeActorOutput(items[0]);
   } catch (err) {
-    console.error('Apify error:', err.response?.data || err.message);
-    throw new Error(`Transcript fetch failed: ${err.message}`);
+    const detail = err.response?.data
+      ? JSON.stringify(err.response.data)
+      : err.message || 'unknown error';
+    console.error('Apify error:', detail);
+    throw new Error(`Transcript fetch failed: ${detail}`);
   }
 }
 
